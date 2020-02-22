@@ -27,8 +27,71 @@ En línea: 1 Carácter: 42
     + FullyQualifiedErrorId : ArgumentNull,Microsoft.PowerShell.Commands.OutFileCommand
     
     
-    -El error se produjo debido a que no existe un path especificado para out-file y el uso del caracter "|" en ese comando no retorna ningún objeto con el cual se pueda trabajar.
+    -El error se produjo debido a que no existe un path especificado para out-file y el uso del caracter "|" no retorna ningún objeto.
  PN°3
  Cómo haría para crear un archivo delimitado por puntos y comas (;)? PISTA: Se emplea export-csv, pero con un parámetro adicional.
  
+    - Para delimitar un archivo podemos usar el parametro [[-Delimiter]]. En este caso para poder hacerlo con el caracter ";" usaremos un cast de char 
+      De esta forma: Get-Process | Export-Csv procesos.csv -Delimiter ";"
+      
+ PN°4
+ Export-cliXML y Export-CSV modifican el sistema, porque pueden crear y sobreescribir archivos. Existe algún parámetro que evite la sobreescritura de un archivo existente?
+ Existe algún parámetro que permita que el comando pregunte antes de sobresscribir un archivo?
  
+    -Para evitar que un archivo se sobreescriba se puede usar el comandlet [-NoClobber]
+    
+    Podemos evidenciarlo en el siguiente ejemplo
+    
+    PS C:\Users\USUARIO\Documents\PowerShell> Get-Process | Export-Csv .\servicios.csv -NoClobber
+    
+    Export-Csv : El archivo 'C:\Users\USUARIO\Documents\PowerShell\servicios.csv' ya existe.
+En línea: 1 Carácter: 15
++ Get-Process | Export-Csv .\servicios.csv -NoClobber
++               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceExists: (C:\Users\USUARI...l\servicios.csv:String) [Export-Csv], IOException
+    + FullyQualifiedErrorId : NoClobber,Microsoft.PowerShell.Commands.ExportCsvCommand
+    
+    
+PN°5
+Windows emplea configuraciones regionales, lo que incluye el separador de listas. En Windows en inglés, el separador de listas es la coma (,).
+Cómo se le dice a Export-CSV que emplee el separador del sistema en lugar de la coma?
+
+    -Para que se emplee el separador del sistema en lugar del caracter "," podemos usar el comandlet de -Force, en este caso para emplear una lista
+    de idiomas el comando completo se veria de esta forma Set-WinUserLanguageList -LanguageList (New-WinUserLanguageList -Language en-US) -Force
+    
+    
+PN°6
+Identifique un cmdlet que permita generar un número aleatorio.
+
+    -Para generar un número aleatorio se usa el comandlet random, por consiguiente existen unas palabras reservadas para especificar el límite para generarlos.
+    
+    Get-Random 100 --- Genera un número aleatorio entre 0 y 99
+    100 | Get-Random --- Genera un número aleatorio entre 0 y 8
+    Get-Random 100 -Minimum 2 --- Genera un número aleatorio entre 2 y 99
+      
+    
+PN°7
+Identifique un cmdlet que despliegue la fecha y hora actuales.
+
+    -PS C:\Users\USUARIO\Documents\PowerShell> Get-Date
+
+    sábado, febrero 22, 2020 10:00:37 AM
+ 
+ 
+ PN°8
+ Qué tipo de objeto produce el cmdlet de la pregunta 7?
+ 
+    -Para determinar el tipo del retorno de un comando se puede usar el comandlet .GetType() de esta forma:
+    
+    PS C:\Users\USUARIO\Documents\PowerShell> (Get-Date).GetType()
+
+    IsPublic IsSerial Name                                     BaseType                                                        
+    -------- -------- ----                                     --------                                                        
+    True     True     DateTime                                 System.ValueType
+    
+    
+PN°9
+Usando el cmdlet de la pregunta 7 y select-object, despliegue solamente el día de la semana, así:
+   DayOfWeek
+   ---------
+    Thursday
