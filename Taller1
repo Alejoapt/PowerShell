@@ -1,0 +1,34 @@
+Taller Clase 3 PowerShell
+
+PN°1
+Cree dos archivos de texto similares (con una o dos líneas diferentes). Compárelos empleando diff.
+
+-   PS C:\Users\USUARIO\Documents\PowerShell> .\Texto1.txt
+    PS C:\Users\USUARIO\Documents\PowerShell> .\Texto2.txt
+    
+    PS C:\Users\USUARIO\Documents\PowerShell> Compare-Object -ReferenceObject (Get-Content .\Texto1.txt) -DifferenceObject (Get-Content .\Texto2.txt)
+  
+    InputObject SideIndicator
+    ----------- -------------
+    Prueba 2    =>           
+    Prueba 1    <=  
+    
+   
+PN°2
+Qué ocurre si se ejecuta:
+get-service | export-csv servicios.csv | out-file
+
+out-file : No se puede procesar el argumento porque el valor del argumento "path" es NULL. Cambie el valor del argumento 
+"path" a un valor no nulo.
+En línea: 1 Carácter: 42
++ get-service | export-csv servicios.csv | out-file
++                                         
+    + CategoryInfo          : InvalidArgument: (:) [Out-File], PSArgumentNullException
+    + FullyQualifiedErrorId : ArgumentNull,Microsoft.PowerShell.Commands.OutFileCommand
+    
+    
+    -El error se produjo debido a que no existe un path especificado para out-file y el uso del caracter "|" en ese comando no retorna ningún objeto con el cual se pueda trabajar.
+ PN°3
+ Cómo haría para crear un archivo delimitado por puntos y comas (;)? PISTA: Se emplea export-csv, pero con un parámetro adicional.
+ 
+ 
