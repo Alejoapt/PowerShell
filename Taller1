@@ -1,4 +1,4 @@
-Taller Clase 3 PowerShell
+Taller Clase 3 PowerShell - Alejandro Peña Tsukamoto A00014140
 
 PN°1
 Cree dos archivos de texto similares (con una o dos líneas diferentes). Compárelos empleando diff.
@@ -95,3 +95,158 @@ Usando el cmdlet de la pregunta 7 y select-object, despliegue solamente el día 
    DayOfWeek
    ---------
     Thursday
+
+
+    -PS C:\Users\USUARIO\Documents\PowerShell> get-date| Select-Object -Property "DayOfWeek"
+
+    DayOfWeek
+    ---------
+     Saturday
+     
+     
+ PN°10
+ Identifique un cmdlet que muestre información acerca de parches (hotfixes) instalados en el sistema.
+ 
+    -El comandlet Get-WmiObject Obtiene la información de la clase  WMI las instancias de las clases o las clases disponibles.
+    Y la clase Win32_QuickFixEngineering solo devuelve las actualizaciones proporcionadas por Component Based Servicing (CBS)
+    
+    
+    PS C:\Users\USUARIO\Documents\PowerShell> Get-WmiObject Win32_QuickFixEngineering
+
+    Source        Description      HotFixID      InstalledBy          InstalledOn              
+    ------        -----------      --------      -----------          -----------              
+    DESKTOP-SR... Update           KB4534131     NT AUTHORITY\SYSTEM  2/22/2020 12:00:00 AM    
+    DESKTOP-SR... Update           KB4465065     NT AUTHORITY\SYSTEM  6/21/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4470788     NT AUTHORITY\SYSTEM  3/30/2019 12:00:00 AM    
+    DESKTOP-SR... Update           KB4480056     NT AUTHORITY\SYSTEM  3/30/2019 12:00:00 AM    
+    DESKTOP-SR... Update           KB4486153     NT AUTHORITY\SYSTEM  8/25/2019 12:00:00 AM    
+    DESKTOP-SR... Update           KB4486161     NT AUTHORITY\SYSTEM  10/1/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4493510     NT AUTHORITY\SYSTEM  4/10/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4499728     NT AUTHORITY\SYSTEM  5/17/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4504369     NT AUTHORITY\SYSTEM  6/21/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4509095     NT AUTHORITY\SYSTEM  8/1/2019 12:00:00 AM     
+    DESKTOP-SR... Security Update  KB4512577     NT AUTHORITY\SYSTEM  9/11/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4512937     NT AUTHORITY\SYSTEM  8/13/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4516115     NT AUTHORITY\SYSTEM  9/12/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4521862     NT AUTHORITY\SYSTEM  10/8/2019 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4523204     NT AUTHORITY\SYSTEM  11/13/2019 12:00:00 AM   
+    DESKTOP-SR... Security Update  KB4537759     NT AUTHORITY\SYSTEM  2/22/2020 12:00:00 AM    
+    DESKTOP-SR... Security Update  KB4532691     NT AUTHORITY\SYSTEM  2/22/2020 12:00:00 AM    
+
+
+
+PN°11
+Empleando el cmdlet de la pregunta 10, muestre una lista de parches instalados. Luego extienda la expresión para ordenar la lista por fecha de instalación,
+y muestre en pantalla únicamente la fecha de instalación, el usuario que instaló el parche, y el ID del parche. Recuerde examinar los nombres de las propiedades.
+    
+    
+    -PS C:\Users\USUARIO\Documents\PowerShell>  Get-WmiObject Win32_QuickFixEngineering | Select-Object -Property InstalledOn, CSName ,HotFixID
+
+    InstalledOn            CSName          HotFixID 
+    -----------            ------          -------- 
+    2/22/2020 12:00:00 AM  DESKTOP-SRK1PNA KB4534131
+    6/21/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4465065
+    3/30/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4470788
+    3/30/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4480056
+    8/25/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4486153
+    10/1/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4486161
+    4/10/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4493510
+    5/17/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4499728
+    6/21/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4504369
+    8/1/2019 12:00:00 AM   DESKTOP-SRK1PNA KB4509095
+    9/11/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4512577
+    8/13/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4512937
+    9/12/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4516115
+    10/8/2019 12:00:00 AM  DESKTOP-SRK1PNA KB4521862
+    11/13/2019 12:00:00 AM DESKTOP-SRK1PNA KB4523204
+    2/22/2020 12:00:00 AM  DESKTOP-SRK1PNA KB4537759
+    2/22/2020 12:00:00 AM  DESKTOP-SRK1PNA KB4532691
+    
+    
+PN°12
+Complemente la solución a la pregunta 11, para que el sistema ordene los resultados por la descripción del parche,
+e incluya en el listado la descripción, el ID del parche, y la fecha de instalación. Escriba los resultados a un archivo HTML.
+
+
+    -Para guardar los resultados en un html se uso el siguiente comandlet:
+    
+    PS C:\Users\USUARIO\Documents\PowerShell> Get-WmiObject Win32_QuickFixEngineering | Select-Object -Property InstalledOn, CSName ,HotFixID, Description | Sort-Object -Property Description| ConvertTo-HTML | Out-file hotFixes.html
+
+    La evidencia del archivo html creado en la carpeta
+    
+    PS C:\Users\USUARIO\Documents\PowerShell> ls
+
+
+    Directorio: C:\Users\USUARIO\Documents\PowerShell
+
+
+    Mode                LastWriteTime         Length Name                                                                      
+    ----                -------------         ------ ----                                                                      
+    -a----        2/22/2020   6:51 PM           4294 hotFixes.html                                                             
+    -a----        2/22/2020   2:14 PM              0 servicios.csv                                                             
+    -a----        2/22/2020   1:39 PM              8 Texto1.txt                                                                
+    -a----        2/22/2020   1:39 PM              8 Texto2.txt  
+    
+    
+    
+PN°13
+Muestre una lista de las 50 entradas más nuevas del log de eventos System. Ordene la lista de modo que las entradas más antiguas aparezcan primero; las entradas producidas al mismo tiempo deben ordenarse por número índice. 
+Muestre el número índice, la hora y la fuente para cada entrada. Escriba esta información en un archivo de texto plano.
+
+
+    -PS C:\Users\USUARIO\Documents\PowerShell> Get-EventLog -LogName system -Newest 50| Sort-Object -Property TimeWritten,Index | Select-Object -Property Index, TimeWritten, Source
+
+        Index TimeWritten           Source                                
+    ----- -----------           ------                                
+    20564 2/22/2020 12:14:48 PM DCOM                                  
+    20565 2/22/2020 12:14:51 PM Microsoft-Windows-FilterManager       
+    20566 2/22/2020 12:15:18 PM DCOM                                  
+    20567 2/22/2020 12:15:22 PM Microsoft-Windows-WindowsUpdateClient 
+    20568 2/22/2020 12:15:42 PM Microsoft-Windows-WindowsUpdateClient 
+    20569 2/22/2020 12:15:49 PM DCOM                                  
+    20570 2/22/2020 12:15:49 PM DCOM                                  
+    20571 2/22/2020 12:15:49 PM DCOM                                  
+    20572 2/22/2020 12:16:16 PM Microsoft-Windows-WindowsUpdateClient 
+    20573 2/22/2020 12:17:04 PM Microsoft-Windows-WindowsUpdateClient 
+    20574 2/22/2020 12:17:04 PM Microsoft-Windows-WindowsUpdateClient 
+    20575 2/22/2020 12:17:04 PM Microsoft-Windows-WindowsUpdateClient 
+    20576 2/22/2020 12:18:54 PM Microsoft-Windows-Kernel-General      
+    20577 2/22/2020 12:19:00 PM Microsoft-Windows-WindowsUpdateClient 
+    20578 2/22/2020 12:19:00 PM Microsoft-Windows-WindowsUpdateClient 
+    20579 2/22/2020 12:19:17 PM Microsoft-Windows-Kernel-General      
+    20580 2/22/2020 12:19:22 PM Microsoft-Windows-WindowsUpdateClient 
+    20581 2/22/2020 12:19:22 PM Microsoft-Windows-WindowsUpdateClient 
+    20582 2/22/2020 12:20:04 PM Microsoft-Windows-Kernel-General      
+    20583 2/22/2020 12:20:10 PM Microsoft-Windows-WindowsUpdateClient 
+    20584 2/22/2020 12:20:10 PM Microsoft-Windows-WindowsUpdateClient 
+    20585 2/22/2020 12:25:04 PM Service Control Manager               
+    20586 2/22/2020 12:38:17 PM Microsoft-Windows-Kernel-General      
+    20587 2/22/2020 12:38:18 PM Microsoft-Windows-Kernel-Power        
+    20588 2/22/2020 12:38:24 PM Microsoft-Windows-Kernel-Power        
+    20589 2/22/2020 1:03:28 PM  Microsoft-Windows-Kernel-General      
+    20590 2/22/2020 1:03:28 PM  Microsoft-Windows-Kernel-Power        
+    20591 2/22/2020 1:03:28 PM  Microsoft-Windows-Kernel-Power        
+    20592 2/22/2020 1:03:29 PM  VBoxNetLwf                            
+    20593 2/22/2020 1:03:29 PM  VBoxNetLwf                            
+    20594 2/22/2020 1:03:31 PM  Microsoft-Windows-Power-Troubleshooter
+    20595 2/22/2020 2:33:23 PM  Microsoft-Windows-Kernel-Power        
+    20596 2/22/2020 2:33:24 PM  Service Control Manager               
+    20597 2/22/2020 2:33:24 PM  Microsoft-Windows-Time-Service        
+    20598 2/22/2020 2:33:27 PM  Microsoft-Windows-Time-Service        
+    20599 2/22/2020 2:33:41 PM  Microsoft-Windows-Time-Service        
+    20600 2/22/2020 2:33:41 PM  Microsoft-Windows-Kernel-General      
+    20601 2/22/2020 2:35:43 PM  Service Control Manager               
+    20602 2/22/2020 2:41:21 PM  Service Control Manager               
+    20603 2/22/2020 2:42:07 PM  Service Control Manager               
+    20604 2/22/2020 2:44:09 PM  Service Control Manager               
+    20605 2/22/2020 2:45:58 PM  Service Control Manager               
+    20606 2/22/2020 2:48:00 PM  Service Control Manager               
+    20607 2/22/2020 3:01:07 PM  Microsoft-Windows-Kernel-General      
+    20608 2/22/2020 3:01:07 PM  Microsoft-Windows-Kernel-General      
+    20609 2/22/2020 5:15:50 PM  Service Control Manager               
+    20610 2/22/2020 5:18:13 PM  Service Control Manager               
+    20611 2/22/2020 6:36:44 PM  Service Control Manager               
+    20612 2/22/2020 6:37:05 PM  Microsoft-Windows-WindowsUpdateClient 
+    20613 2/22/2020 6:41:24 PM  Service Control Manager
+    
+    
