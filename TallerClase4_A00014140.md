@@ -15,7 +15,7 @@ mínimo de espacio horizontal, pero no permita que la información se trunque.
 
 Resultado: 
 
-Name                                                              Id Responding
+`Name                                                              Id Responding
 ----                                                              -- ----------
 aips                                                            3268       True
 ApplicationFrameHost                                           11200       True
@@ -55,7 +55,7 @@ WmiPrvSE                                                        6404       True
 WUDFHost                                                        1100       True
 WUDFHost                                                        1320       True
 YourPhone                                                      11828       True
-YourPhoneServer                                                10068       True
+YourPhoneServer                                                10068       True`
 
 **PN°2**
 
