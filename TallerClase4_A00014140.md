@@ -1,19 +1,20 @@
 
-                                            ##Taller Clase 4 
-                                     **Alejandro Peña Tsukamoto**
-                                            **A00014140**
+##Taller Clase 4 
+                                     
+**Alejandro PeÃ±a Tsukamoto**
+**A00014140**
 
 
-**PN°1**
+**PNÂ°1**
 
-Mostrar una tabla de procesos que incluya únicamente los nombres de los procesos, sus IDs, y 
-si están respondiendo a Windows (la propiedad Responding muestra eso). Haga que la tabla tome el 
-mínimo de espacio horizontal, pero no permita que la información se trunque.
+Mostrar una tabla de procesos que incluya Ãºnicamente los nombres de los procesos, sus IDs, y 
+si estÃ¡n respondiendo a Windows (la propiedad Responding muestra eso). Haga que la tabla tome el 
+mÃ­nimo de espacio horizontal, pero no permita que la informaciÃ³n se trunque.
 
-~~~PS C:\Users\USUARIO> Get-Process | select name,id,responding | ft -Wrap~~~
+` PS C:\Users\USUARIO> Get-Process | select name,id,responding | ft -Wrap `
 
-~~~
-Name                                                              Id Responding
+
+`Name                                                              Id Responding
 ----                                                              -- ----------
 aips                                                            3268       True
 ApplicationFrameHost                                           11200       True
@@ -53,20 +54,16 @@ WmiPrvSE                                                        6404       True
 WUDFHost                                                        1100       True
 WUDFHost                                                        1320       True
 YourPhone                                                      11828       True
-YourPhoneServer                                                10068       True
-~~~
+YourPhoneServer                                                10068       True`
 
-**PN°2**
+**PNÂ°2**
 
-Muestre una tabla de procesos que incluya los nombres de los procesos y sus IDs. También incluya 
-columnas para uso de memoria virtual y física; exprese dichos valores en megabytes (MB).
+Muestre una tabla de procesos que incluya los nombres de los procesos y sus IDs. TambiÃ©n incluya 
+columnas para uso de memoria virtual y fÃ­sica; exprese dichos valores en megabytes (MB).
 
-~~~
-PS C:\Users\USUARIO> Get-Process | ft -Property name, id, @{n='VM (MB)'; e={$_.VM / 1MB -as [int]}}, @{n='PM (MB)' ; e={$_.PM / 1MB -as [int]}}
-~~~
+`PS C:\Users\USUARIO> Get-Process | ft -Property name, id, @{n='VM (MB)'; e={$_.VM / 1MB -as [int]}}, @{n='PM (MB)' ; e={$_.PM / 1MB -as [int]}}`
 
-~~~
-Name                                                              Id VM (MB) PM (MB)
+`Name                                                              Id VM (MB) PM (MB)
 ----                                                              -- ------- -------
 aips                                                            3268      78       4
 ApplicationFrameHost                                           11200 2101521      27
@@ -93,21 +90,19 @@ esif_uf                                                         4360 2101313    
 explorer                                                        8960 2102059      87
 FMService64                                                     4208    4167       1
 fontdrvhost                                                     1072 2101444       4
-fontdrvhost                                                     1080 2101342       2
-~~~
+fontdrvhost                                                     1080 2101342       2`
 
-**PN°3**
+**PNÂ°3**
 
 Emplee Get-EventLog para mostrar una lista de los logs de eventos disponibles (revise la ayuda para encontrar 
-el parámetro que le permitirá obtener dicha información). Formatee la salida como una tabla que incluya el nombre 
-de despliegue del log y el período de retención. Los encabezados de columna deben ser NombreLog y Per-Retencion.
+el parÃ¡metro que le permitirÃ¡ obtener dicha informaciÃ³n). Formatee la salida como una tabla que incluya el nombre 
+de despliegue del log y el perÃ­odo de retenciÃ³n. Los encabezados de columna deben ser NombreLog y Per-Retencion.
 
-~~~
-PS C:\Users\USUARIO> Get-EventLog -List | fl -Property @{n='nombreLog'; e={$_.Log}}, @{n='Per-Retencion';e={$_.minimumRetentionDays}}
-~~~
 
-~~~
-nombreLog     : Application
+`PS C:\Users\USUARIO> Get-EventLog -List | fl -Property @{n='nombreLog'; e={$_.Log}}, @{n='Per-Retencion';e={$_.minimumRetentionDays}}`
+
+
+`nombreLog     : Application
 Per-Retencion : 0
 
 nombreLog     : HardwareEvents
@@ -134,21 +129,18 @@ Per-Retencion : 0
 nombreLog     : Windows Azure
 Per-Retencion : 7
 
-nombreLog     : Windows Power
-~~~
+nombreLog     : Windows Power`
 
-**PN°4**
+**PNÂ°4**
 
-Muestre una lista de servicios, de tal manera que aparezcan agrupados los servicios que están iniciados 
-y los que están detenidos. Los que están iniciados deben aparecer primero.
+Muestre una lista de servicios, de tal manera que aparezcan agrupados los servicios que estÃ¡n iniciados 
+y los que estÃ¡n detenidos. Los que estÃ¡n iniciados deben aparecer primero.
 
-~~~
-PS C:\Users\USUARIO> Get-Service |Sort-Object status | fl -GroupBy status
-~~~
 
-~~~
+`PS C:\Users\USUARIO> Get-Service |Sort-Object status | fl -GroupBy status`
 
-Name                : PerfHost
+
+`Name                : PerfHost
 DisplayName         : DLL de host del Contador de rendimiento
 Status              : Stopped
 DependentServices   : {}
@@ -169,7 +161,7 @@ CanStop             : False
 ServiceType         : Win32OwnProcess, Win32ShareProcess
 
 Name                : RasAuto
-DisplayName         : Administrador de conexiones automáticas de acceso remoto
+DisplayName         : Administrador de conexiones automÃ¡ticas de acceso remoto
 Status              : Stopped
 DependentServices   : {}
 ServicesDependedOn  : {RasAcd}
@@ -196,86 +188,80 @@ ServicesDependedOn  : {RPCSS}
 CanPauseAndContinue : False
 CanShutdown         : False
 CanStop             : False
-ServiceType         : Win32ShareProcess
-~~~
+ServiceType         : Win32ShareProcess`
 
-**PN°5**
+**PNÂ°5**
 
-Mostrar una lista a cuatro columnas de todos los directorios que están en el raíz de la unidad C:
+Mostrar una lista a cuatro columnas de todos los directorios que estÃ¡n en el raÃ­z de la unidad C:
 
-~~~
-PS C:\Users\USUARIO> ls -Path C:\ -Attributes directory| fw -Column 4
-~~~
 
-~~~
-    Directorio: C:\
+`PS C:\Users\USUARIO> ls -Path C:\ -Attributes directory| fw -Column 4`
+
+`    Directorio: C:\
 
 
 
 BIOS                           Drivers                        Intel                          PerfLogs                      
 Program Files                  Program Files (x86)            Users                          Windows                       
+`
 
-~~~
+**PNÂ°6**
 
-**PN°6**
-
-Cree una lista formateada de todos los archivos .exe del directorio C:\Windows. Debe mostrarse el nombre, la información 
-de versión, y el tamaño del archivo. La propiedad de tamaño se llama length en Powershell, pero para mayor claridad,
-la columna se debe llamar Tamaño en su listado.
+Cree una lista formateada de todos los archivos .exe del directorio C:\Windows. Debe mostrarse el nombre, la informaciÃ³n 
+de versiÃ³n, y el tamaÃ±o del archivo. La propiedad de tamaÃ±o se llama length en Powershell, pero para mayor claridad,
+la columna se debe llamar TamaÃ±o en su listado.
 
 
-~~~
-PS C:\Users\USUARIO> ls -Path C:\Windows |where -filter {$_.Name -like "*.exe"} | fl -Property name, @{n='tamaño';e={$_.length}}, versionInfo
-~~~
 
-~~~
+`PS C:\Users\USUARIO> ls -Path C:\Windows |where -filter {$_.Name -like "*.exe"} | fl -Property name, @{n='tamaÃ±o';e={$_.length}}, versionInfo`
+
+`
 Name        : bfsvc.exe
-tamaño      : 78848
+tamaÃ±o      : 78848
 VersionInfo : File:             C:\Windows\bfsvc.exe
               InternalName:     bfsvc.exe
               OriginalFilename: bfsvc.exe.mui
               FileVersion:      10.0.17763.1091 (WinBuild.160101.0800)
-              FileDescription:  Utilidad de servicio de actualización del archivo de arranque
-              Product:          Sistema operativo Microsoft® Windows®
+              FileDescription:  Utilidad de servicio de actualizaciÃ³n del archivo de arranque
+              Product:          Sistema operativo MicrosoftÂ® WindowsÂ®
               ProductVersion:   10.0.17763.1091
               Debug:            False
               Patched:          False
               PreRelease:       False
               PrivateBuild:     False
               SpecialBuild:     False
-              Language:         Español (España, internacional)
+              Language:         EspaÃ±ol (EspaÃ±a, internacional)
               
 
 Name        : explorer.exe
-tamaño      : 4417008
+tamaÃ±o      : 4417008
 VersionInfo : File:             C:\Windows\explorer.exe
               InternalName:     explorer
               OriginalFilename: EXPLORER.EXE.MUI
               FileVersion:      10.0.17763.1091 (WinBuild.160101.0800)
               FileDescription:  Explorador de Windows
-              Product:          Sistema operativo Microsoft® Windows®
+              Product:          Sistema operativo MicrosoftÂ® WindowsÂ®
               ProductVersion:   10.0.17763.1091
               Debug:            False
               Patched:          False
               PreRelease:       False
               PrivateBuild:     False
               SpecialBuild:     False
-              Language:         Español (España, internacional)
+              Language:         EspaÃ±ol (EspaÃ±a, internacional)
               
-~~~
+`
 
 
-**PN°7**
+**PNÂ°7**
 
-Importe el módulo NetAdapter (empleando el comando Import-Module NetAdapter). Empleando el cmdlet Get-NetAdapter, 
+Importe el mÃ³dulo NetAdapter (empleando el comando Import-Module NetAdapter). Empleando el cmdlet Get-NetAdapter, 
 muestre una lista de adaptadores no virtuales (adaptadores cuya propiedad Virtual sea falsa. 
-El valor lógico falso es representado por Powershell como $False).
+El valor lÃ³gico falso es representado por Powershell como $False).
 
-~~~
-PS C:\Users\USUARIO> Get-NetAdapter | Where -filter {$_.Virtual -eq $false} |fl
-~~~
 
-~~~
+`PS C:\Users\USUARIO> Get-NetAdapter | Where -filter {$_.Virtual -eq $false} |fl`
+
+`
 Name                       : Ethernet 2
 InterfaceDescription       : TAP-Windows Adapter V9
 InterfaceIndex             : 21
@@ -313,19 +299,17 @@ AdminStatus                : Up
 LinkSpeed(Gbps)            : 1.2
 MediaConnectionState       : Connected
 ConnectorPresent           : True
-DriverInformation          : Driver Date 2006-06-21 Version 10.0.17763.1 NDIS 6.30
-~~~
+DriverInformation          : Driver Date 2006-06-21 Version 10.0.17763.1 NDIS 6.30`
 
-**PN°8**
+**PNÂ°8**
 
-Importe el módulo DnsClient. Empleando el cmdlet Get-DnsClientCache, muestre una lista de los registros A y AAAA 
-que estén en el caché. Sugerencia: Si el caché está vacío, visite algunos sitios web para poblarlo.
+Importe el mÃ³dulo DnsClient. Empleando el cmdlet Get-DnsClientCache, muestre una lista de los registros A y AAAA 
+que estÃ©n en el cachÃ©. Sugerencia: Si el cachÃ© estÃ¡ vacÃ­o, visite algunos sitios web para poblarlo.
 
-~~~
-PS C:\Users\USUARIO> Get-DnsClientCache | where -filter {$_.Type -eq (28 ) -or $_.Type -eq 1} |fl
-~~~
 
-~~~
+`PS C:\Users\USUARIO> Get-DnsClientCache | where -filter {$_.Type -eq (28 ) -or $_.Type -eq 1} |fl`
+
+`
 Entry      : bid.g.doubleclick.net
 RecordName : ads-bid.l.doubleclick.net
 RecordType : A
@@ -344,18 +328,17 @@ TimeToLive : 290
 DataLength : 4
 Data       : 66.225.223.127
 
-~~~
+`
 
-**PN°9**
+**PNÂ°9**
 
-Genere una lista de todos los archivos .exe del directorio C:\Windows\System32 que tengan más de 5 MB.
+Genere una lista de todos los archivos .exe del directorio C:\Windows\System32 que tengan mÃ¡s de 5 MB.
 
-~~~
-C:\Users\USUARIO> ls -Path C:\Windows\System32 | where -filter {$_.Name -like "*exe"} | WHERE -filter {$_.length/1MB -gt 5}
-~~~
 
-~~~
+`C:\Users\USUARIO> ls -Path C:\Windows\System32 | where -filter {$_.Name -like "*exe"} | WHERE -filter {$_.length/1MB -gt 5}`
 
+
+`
     Directorio: C:\Windows\System32
 
 
@@ -366,17 +349,16 @@ Mode                LastWriteTime         Length Name
 -a----    12/03/2020  10:53 p. m.        9672208 ntoskrnl.exe                                                              
 -a----     31/03/2019  1:21 a. m.        5732352 VsGraphicsDesktopEngine.exe                                               
 
-~~~
+`
 
-**PN°10**
+**PNÂ°10**
 
 Muestre una lista de parches que sean actualizaciones de seguridad.
 
-~~~
-PS C:\Users\USUARIO> Get-HotFix | where -filter {$_.description -like "*security*"} |fl
-~~~
 
-~~~
+`PS C:\Users\USUARIO> Get-HotFix | where -filter {$_.description -like "*security*"} |fl`
+
+`
 
 Description         : Security Update
 FixComments         : 
@@ -507,20 +489,19 @@ InstalledOn         : 22/03/2020 12:00:00 a. m.
 Name                : 
 ServicePackInEffect : 
 Status              : 
-~~~
+`
 
-**PN°11**
+**PNÂ°11**
 
 Muestre una lista de parches que hayan sido instalados por el usuario Administrador, que sean actualizaciones. 
 Si no tiene ninguno, busque parches instalados por el usuario System. Note que algunos parches no tienen valor
 en el campo Installed By.
 
 
-~~~
-PS C:\Users\USUARIO> Get-HotFix | where -filter {$_.installedBy -like "*SYSTEM*"} |fl
-~~~
 
-~~~
+`PS C:\Users\USUARIO> Get-HotFix | where -filter {$_.installedBy -like "*SYSTEM*"} |fl`
+
+`
 Description         : Update
 FixComments         : 
 HotFixID            : KB4534131
@@ -550,17 +531,16 @@ InstalledOn         : 30/03/2019 12:00:00 a. m.
 Name                : 
 ServicePackInEffect : 
 Status              : 
-~~~
+`
 
-**PN°12**
+**PNÂ°12**
 
-Genere una lista de todos los procesos que estén corriendo con el nombre Conhost o Svchost.
+Genere una lista de todos los procesos que estÃ©n corriendo con el nombre Conhost o Svchost.
 
-~~~
-PS C:\Users\USUARIO> Get-Process | where -filter {$_.Name -eq "Conhost" -or $_.Name -eq "Svchost"} | fl
-~~~
 
-~~~
+`PS C:\Users\USUARIO> Get-Process | where -filter {$_.Name -eq "Conhost" -or $_.Name -eq "Svchost"} | fl`
+
+`
 Id      : 13612
 Handles : 150
 CPU     : 
@@ -584,4 +564,4 @@ Handles : 1255
 CPU     : 
 SI      : 0
 Name    : svchost
-~~~
+`
