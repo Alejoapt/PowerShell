@@ -13,6 +13,7 @@ mínimo de espacio horizontal, pero no permita que la información se trunque.
 
 ` PS C:\Users\USUARIO> Get-Process | select name,id,responding | ft -Wrap `
 
+```
 Name                                                              Id Responding
 ----                                                              -- ----------
 aips                                                            3268       True
@@ -53,7 +54,8 @@ WmiPrvSE                                                        6404       True
 WUDFHost                                                        1100       True
 WUDFHost                                                        1320       True
 YourPhone                                                      11828       True
-YourPhoneServer                                                10068       True
+YourPhoneServer                                                10068       True 
+```
 
 **PN°2**
 
@@ -62,7 +64,8 @@ columnas para uso de memoria virtual y física; exprese dichos valores en megaby
 
 `PS C:\Users\USUARIO> Get-Process | ft -Property name, id, @{n='VM (MB)'; e={$_.VM / 1MB -as [int]}}, @{n='PM (MB)' ; e={$_.PM / 1MB -as [int]}}`
 
-`Name                                                              Id VM (MB) PM (MB)
+```
+Name                                                              Id VM (MB) PM (MB)
 ----                                                              -- ------- -------
 aips                                                            3268      78       4
 ApplicationFrameHost                                           11200 2101521      27
@@ -89,7 +92,8 @@ esif_uf                                                         4360 2101313    
 explorer                                                        8960 2102059      87
 FMService64                                                     4208    4167       1
 fontdrvhost                                                     1072 2101444       4
-fontdrvhost                                                     1080 2101342       2`
+fontdrvhost                                                     1080 2101342       2
+```
 
 **PN°3**
 
@@ -100,8 +104,8 @@ de despliegue del log y el período de retención. Los encabezados de columna de
 
 `PS C:\Users\USUARIO> Get-EventLog -List | fl -Property @{n='nombreLog'; e={$_.Log}}, @{n='Per-Retencion';e={$_.minimumRetentionDays}}`
 
-
-`nombreLog     : Application
+```
+nombreLog     : Application
 Per-Retencion : 0
 
 nombreLog     : HardwareEvents
@@ -128,7 +132,8 @@ Per-Retencion : 0
 nombreLog     : Windows Azure
 Per-Retencion : 7
 
-nombreLog     : Windows Power`
+nombreLog     : Windows Power
+```
 
 **PN°4**
 
@@ -139,7 +144,8 @@ y los que están detenidos. Los que están iniciados deben aparecer primero.
 `PS C:\Users\USUARIO> Get-Service |Sort-Object status | fl -GroupBy status`
 
 
-`Name                : PerfHost
+```
+Name                : PerfHost
 DisplayName         : DLL de host del Contador de rendimiento
 Status              : Stopped
 DependentServices   : {}
@@ -187,7 +193,8 @@ ServicesDependedOn  : {RPCSS}
 CanPauseAndContinue : False
 CanShutdown         : False
 CanStop             : False
-ServiceType         : Win32ShareProcess`
+ServiceType         : Win32ShareProcess
+```
 
 **PN°5**
 
@@ -196,13 +203,14 @@ Mostrar una lista a cuatro columnas de todos los directorios que están en el ra
 
 `PS C:\Users\USUARIO> ls -Path C:\ -Attributes directory| fw -Column 4`
 
-`    Directorio: C:\
+```
+   Directorio: C:\
 
 
 
 BIOS                           Drivers                        Intel                          PerfLogs                      
 Program Files                  Program Files (x86)            Users                          Windows                       
-`
+```
 
 **PN°6**
 
@@ -214,7 +222,7 @@ la columna se debe llamar Tamaño en su listado.
 
 `PS C:\Users\USUARIO> ls -Path C:\Windows |where -filter {$_.Name -like "*.exe"} | fl -Property name, @{n='tamaño';e={$_.length}}, versionInfo`
 
-`
+```
 Name        : bfsvc.exe
 tamaño      : 78848
 VersionInfo : File:             C:\Windows\bfsvc.exe
@@ -248,7 +256,7 @@ VersionInfo : File:             C:\Windows\explorer.exe
               SpecialBuild:     False
               Language:         Español (España, internacional)
               
-`
+```
 
 
 **PN°7**
@@ -260,7 +268,7 @@ El valor lógico falso es representado por Powershell como $False).
 
 `PS C:\Users\USUARIO> Get-NetAdapter | Where -filter {$_.Virtual -eq $false} |fl`
 
-`
+```
 Name                       : Ethernet 2
 InterfaceDescription       : TAP-Windows Adapter V9
 InterfaceIndex             : 21
@@ -298,7 +306,8 @@ AdminStatus                : Up
 LinkSpeed(Gbps)            : 1.2
 MediaConnectionState       : Connected
 ConnectorPresent           : True
-DriverInformation          : Driver Date 2006-06-21 Version 10.0.17763.1 NDIS 6.30`
+DriverInformation          : Driver Date 2006-06-21 Version 10.0.17763.1 NDIS 6.30
+```
 
 **PN°8**
 
@@ -308,7 +317,7 @@ que estén en el caché. Sugerencia: Si el caché está vacío, visite algunos s
 
 `PS C:\Users\USUARIO> Get-DnsClientCache | where -filter {$_.Type -eq (28 ) -or $_.Type -eq 1} |fl`
 
-`
+```
 Entry      : bid.g.doubleclick.net
 RecordName : ads-bid.l.doubleclick.net
 RecordType : A
@@ -326,8 +335,7 @@ Section    : Answer
 TimeToLive : 290
 DataLength : 4
 Data       : 66.225.223.127
-
-`
+```
 
 **PN°9**
 
@@ -337,7 +345,7 @@ Genere una lista de todos los archivos .exe del directorio C:\Windows\System32 q
 `C:\Users\USUARIO> ls -Path C:\Windows\System32 | where -filter {$_.Name -like "*exe"} | WHERE -filter {$_.length/1MB -gt 5}`
 
 
-`
+```
     Directorio: C:\Windows\System32
 
 
@@ -347,8 +355,7 @@ Mode                LastWriteTime         Length Name
 -a----     15/09/2018  2:28 a. m.        6784512 mspaint.exe                                                               
 -a----    12/03/2020  10:53 p. m.        9672208 ntoskrnl.exe                                                              
 -a----     31/03/2019  1:21 a. m.        5732352 VsGraphicsDesktopEngine.exe                                               
-
-`
+```
 
 **PN°10**
 
@@ -357,8 +364,8 @@ Muestre una lista de parches que sean actualizaciones de seguridad.
 
 `PS C:\Users\USUARIO> Get-HotFix | where -filter {$_.description -like "*security*"} |fl`
 
-`
 
+```
 Description         : Security Update
 FixComments         : 
 HotFixID            : KB4470788
@@ -488,7 +495,7 @@ InstalledOn         : 22/03/2020 12:00:00 a. m.
 Name                : 
 ServicePackInEffect : 
 Status              : 
-`
+```
 
 **PN°11**
 
@@ -500,7 +507,7 @@ en el campo Installed By.
 
 `PS C:\Users\USUARIO> Get-HotFix | where -filter {$_.installedBy -like "*SYSTEM*"} |fl`
 
-`
+```
 Description         : Update
 FixComments         : 
 HotFixID            : KB4534131
@@ -530,7 +537,7 @@ InstalledOn         : 30/03/2019 12:00:00 a. m.
 Name                : 
 ServicePackInEffect : 
 Status              : 
-`
+```
 
 **PN°12**
 
@@ -539,7 +546,7 @@ Genere una lista de todos los procesos que estén corriendo con el nombre Conhos
 
 `PS C:\Users\USUARIO> Get-Process | where -filter {$_.Name -eq "Conhost" -or $_.Name -eq "Svchost"} | fl`
 
-`
+```
 Id      : 13612
 Handles : 150
 CPU     : 
@@ -563,4 +570,4 @@ Handles : 1255
 CPU     : 
 SI      : 0
 Name    : svchost
-`
+```
